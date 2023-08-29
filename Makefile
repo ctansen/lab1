@@ -1,8 +1,9 @@
 
-all: tuesday
+all: lab1
 
-tuesday: tuesday.cpp
-	g++ tuesday.cpp -Wall -o tuesday
+lab1: lab1.cpp
+	g++ lab1.cpp -Wall -olab1 -lX11 -lGL -lGLU -lm
 
 clean:
-	rm -f tuesday
+	rm -f lab1
+
