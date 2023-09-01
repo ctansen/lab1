@@ -1,5 +1,5 @@
 //modified by:Colton Tansen
-//date:August 29, 2023
+//date:September 1, 2023
 //
 //author: Gordon Griesel
 //date: Spring 2022
@@ -26,8 +26,6 @@ public:
     float w;
     float dir;
     float pos[2];
-    float prevPos[2];
-    int bounceRate;
     unsigned char boxColor[3];
 	Global();
 } g;
@@ -83,10 +81,10 @@ int main()
 
 Global::Global()
 {
-	xres = 400;
+	xres = 600;
 	yres = 200;
     w = 20.0f;
-    dir = 5.0f;
+    dir = 50.0f;
     pos[0] = 0.0f + w;
     pos[1] = yres / 2.0f;
 }
@@ -251,19 +249,23 @@ void init_opengl(void)
 
 void physics()
 {
-    int deltaTime = 0.2f;
-    g.prevPos[0] = g.pos[0];
-
     g.pos[0] += g.dir;
 
-    g.bounceRate = abs((g.pos[0] - g.prevPos[0]) / deltaTime);
-    g.bounceRate = g.bounceRate % 100;
-    g.bounceRate = g.bounceRate / 100;
-    g.boxColor[0] = 255 * g.bounceRate;
-    g.boxColor[1] = 0;
-    g.boxColor[2] = 255 * (1 - g.bounceRate);
+    float widthFactor = static_cast<float>(g.xres) / 600.0f;
+    float heightFactor = static_cast<float>(g.yres) / 200.0f;
+    
+    if (widthFactor > heightFactor) {
+        g.boxColor[0] = 0;
+        g.boxColor[1] = 0;
+        g.boxColor[2] = 255;
+    }
+    else {
+        g.boxColor[0] = 255;
+        g.boxColor[1] = 0;
+        g.boxColor[2] = 0;
+    }
 
-	if (g.pos[0] >= (g.xres-g.w)) {
+    if (g.pos[0] >= (g.xres-g.w)) {
 		g.pos[0] = (g.xres-g.w);
 		g.dir = -g.dir;
 	}
@@ -271,7 +273,6 @@ void physics()
 		g.pos[0] = g.w;
 		g.dir = -g.dir;
 	}
-
 }
 
 void render()
