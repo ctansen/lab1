@@ -81,10 +81,10 @@ int main()
 
 Global::Global()
 {
-	xres = 600;
+	xres = 400;
 	yres = 200;
     w = 20.0f;
-    dir = 50.0f;
+    dir = 20.0f;
     pos[0] = 0.0f + w;
     pos[1] = yres / 2.0f;
 }
@@ -251,7 +251,7 @@ void physics()
 {
     g.pos[0] += g.dir;
 
-    float widthFactor = static_cast<float>(g.xres) / 600.0f;
+    float widthFactor = static_cast<float>(g.xres) / 500.0f;
     float heightFactor = static_cast<float>(g.yres) / 200.0f;
     
     if (widthFactor > heightFactor) {
